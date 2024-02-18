@@ -1,0 +1,17 @@
+name: Mirror Repos
+on:
+  schedule:
+    - cron:  '0 * * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Mirror QBE
+      run: |
+        git clone --mirror 'git://c9x.me/qbe.git'
+        cd qbe.git
+        git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/mirror-qbe.git"
+        git push --mirror github
+      env:
+        GITHUB_TOKEN: ${{ secrets.MIRROR_CRED }}
