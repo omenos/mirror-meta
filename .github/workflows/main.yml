@@ -5,11 +5,12 @@ on:
     - cron:  '0 0/4 * * *'
 
 jobs:
-  build:
+  mirror:
     runs-on: ubuntu-latest
     steps:
     - name: Mirror QBE
       run: |
+        cd /opt
         git clone --mirror "git://c9x.me/qbe.git"
         cd qbe.git
         git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_ACTOR/mirror-qbe.git"
@@ -19,7 +20,9 @@ jobs:
 
     - name: Mirror Hugo
       run: |
+        cd /opt
         git clone --mirror "https://github.com/gohugoio/hugo.git"
+        cd hugo
         git remote add codeberg "ssh://git@codeberg.org:omenos/hugo-mirror.git"
         echo "$PRIVATE_KEY" > /tmp/priv
         GIT_SSH_COMMAND="ssh -i /tmp/priv -o IdentitiesOnly=yes" git push --mirror codeberg
