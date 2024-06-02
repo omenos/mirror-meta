@@ -11,7 +11,7 @@ jobs:
     - name: Mirror QBE
       run: |
         cd /opt
-        git clone --mirror "git://c9x.me/qbe.git"
+        git clone --mirror 'git://c9x.me/qbe.git'
         cd qbe.git
         git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_ACTOR/mirror-qbe.git"
         git push --mirror github
@@ -21,12 +21,12 @@ jobs:
     - name: Mirror Hugo
       run: |
         cd /opt
-        git clone --mirror "https://github.com/gohugoio/hugo.git"
+        git clone --mirror 'https://github.com/gohugoio/hugo.git'
         cd hugo.git
-        git remote add codeberg "git@codeberg.org:omenos/hugo-mirror.git"
+        git remote add codeberg 'git@codeberg.org:omenos/hugo-mirror.git'
         echo "$PRIVATE_KEY" > /tmp/priv
         chmod 0400 /tmp/priv
-        GIT_SSH_COMMAND="ssh -F none -i /tmp/priv -o IdentitiesOnly=yes" git push --mirror codeberg
+        GIT_SSH_COMMAND='ssh -v -F "none" -i "/tmp/priv" -o IdentitiesOnly="yes"' git push --mirror codeberg
         rm -f /tmp/priv
       env:
         PRIVATE_KEY: ${{ secrets.HUGO_MIRROR_KEY }}
