@@ -26,7 +26,7 @@ jobs:
         git remote add codeberg "git@codeberg.org:omenos/hugo-mirror.git"
         echo "$PRIVATE_KEY" > /tmp/priv
         chmod 0400 /tmp/priv
-        GIT_SSH_COMMAND="ssh -i /tmp/priv -o IdentitiesOnly=yes" git push --mirror codeberg
+        GIT_SSH_COMMAND="ssh -F none -i /tmp/priv -o IdentitiesOnly=yes" git push --mirror codeberg
         rm -f /tmp/priv
       env:
         PRIVATE_KEY: ${{ secrets.HUGO_MIRROR_KEY }}
