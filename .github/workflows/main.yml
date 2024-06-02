@@ -23,8 +23,9 @@ jobs:
         cd /opt
         git clone --mirror "https://github.com/gohugoio/hugo.git"
         cd hugo.git
-        git remote add codeberg "ssh://git@codeberg.org:omenos/hugo-mirror.git"
+        git remote add codeberg "git@codeberg.org:omenos/hugo-mirror.git"
         echo "$PRIVATE_KEY" > /tmp/priv
+        chmod 0400 /tmp/priv
         GIT_SSH_COMMAND="ssh -i /tmp/priv -o IdentitiesOnly=yes" git push --mirror codeberg
         rm -f /tmp/priv
       env:
